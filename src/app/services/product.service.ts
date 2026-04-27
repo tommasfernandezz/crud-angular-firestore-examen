@@ -28,6 +28,11 @@ export class ProductService {
     return addDoc(this.productsCollection, cleanProduct);
   }
 
+  private removeId(product: Product): Omit<Product, 'id'> {
+    const { id, ...cleanProduct } = product;
+    return cleanProduct;
+  }
+
   update(id: string, product: Product) {
     const productDoc = doc(this.firestore, `${this.collectionName}/${id}`);
     const cleanProduct = this.removeId(product);
@@ -39,8 +44,4 @@ export class ProductService {
     return deleteDoc(productDoc);
   }
 
-  private removeId(product: Product): Omit<Product, 'id'> {
-    const { id, ...cleanProduct } = product;
-    return cleanProduct;
-  }
 }
